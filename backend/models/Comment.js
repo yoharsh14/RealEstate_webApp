@@ -6,10 +6,10 @@ const commentSchema = new mongoose.Schema({
     ref: "Property",
     required: true,
   },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: ture },
-  commentText: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  commentText: { type: String, required: true },
   rating: { type: Number, min: 1, max: 5 },
-  data: { type: Date, default: Date.now },
+  date: { type: Date, default: Date.now },
 });
 
 const Comment = mongoose.model("Comment", commentSchema);

@@ -35,6 +35,25 @@ export const addFavorite = async (req, res) => {
 
 export const deleteFavorite = async (req, res) => {
   try {
+    const { favoriteId } = req.body;
+    await Favorite.findByIdAndDelete(favoriteId);
+    res.status(200).json({
+      deleted: true,
+    });
+  } catch (error) {
+    console.log("Error in sendMessage controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getFavorite = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if (user) {
+      const listOfFavorite = await Favorite.find({ userId: { $eq: userId } });
+      res.status(200).json(listOfFavorite);
+    }
   } catch (error) {
     console.log("Error in sendMessage controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
